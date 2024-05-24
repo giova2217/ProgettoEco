@@ -1,0 +1,232 @@
+/*=============== ADDING FONT ===============*/
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+/*=============== VARIABLES CSS ===============*/
+:root {
+  --header-height: 3.5rem;
+
+  /*========== Colors ==========*/
+  /*Color mode HSL(hue, saturation, lightness)*/
+  --first-color: #00dd7b;
+  --second-color: #8beb7c;
+  --title-color: hsl(230, 75%, 15%);
+  --text-color: hsl(230, 12%, 40%);
+  --body-color: hsl(230, 100%, 98%);
+  --container-color: hsl(230, 100%, 97%);
+  --border-color: hsl(230, 25%, 80%);
+
+  /*========== Font and typography ==========*/
+  /*.5rem = 8px | 1rem = 16px ...*/
+  font-family: "Barlow Condensed", sans-serif;
+  --h2-font-size: 1.25rem;
+  --normal-font-size: .938rem;
+
+  /*========== Font weight ==========*/
+  --font-regular: 400;
+  --font-medium: 500;
+  --font-semi-bold: 600;
+
+  /*========== z index ==========*/
+  --z-fixed: 100;
+  --z-modal: 1000;
+}
+
+/*=============== ARTICLES LIST ===============*/
+.container {
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  flex-wrap: nowrap; /* Ensure the sidebar is always on the right side */
+  padding: 1rem;
+  gap: 1rem;
+}
+
+.posts-section {
+  width: 100%;
+  max-width: 66.66%;
+  padding: 1rem;
+}
+
+.post {
+  background: #fff;
+  margin-bottom: 1rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.image-link img {
+  width: 100%;
+  transition: opacity 0.3s ease;
+}
+
+.image-link:hover img {
+  opacity: 0.75;
+}
+
+.post-content {
+  padding: 1rem;
+}
+
+.category {
+  display: inline-block;
+  font-size: 1rem;
+  text-transform: uppercase;
+  color: var(--second-color);
+}
+
+.title {
+  font-size: 1.875rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 0.5rem;
+  display: block;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.title:hover {
+  color: #555;
+}
+
+.meta {
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+}
+
+.author {
+  font-weight: bold;
+}
+
+.excerpt {
+  margin: 1rem 0;
+}
+
+.read-more {
+  display: inline-block;
+  text-transform: uppercase;
+  color: var(--text-color);
+  transition: color 0.3s ease;
+  text-decoration: none;
+}
+
+.read-more:hover {
+  color: var(--first-color);
+}
+
+.pagination-container {
+  display: flex;
+  align-items: center;
+  padding: 2rem 0;
+  justify-content: center;
+}
+
+.pagination-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.5rem;
+  width: 2.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #4a5568; /* Gray-800 */
+  background-color: #f4f4f4;
+  text-decoration: none;
+  margin: 0 0.25rem;
+  border-radius: 0.25rem;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.pagination-button:hover {
+  background-color: #38a169; /* Green-600 */
+  color: #ffffff;
+}
+
+.pagination-button.active {
+  background-color: #2f855a; /* Green-800 */
+  color: #ffffff;
+}
+
+.pagination-button.arrow {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #2f855a; /* Green-800 */
+}
+
+.pagination-button.arrow:hover {
+  background-color: #38a169; /* Green-600 */
+  color: #ffffff;
+}
+
+.page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  background: #2f855a;
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 0.25rem;
+  transition: background 0.3s ease;
+}
+
+.page:hover {
+  background: #276749;
+}
+
+.page.current {
+  background: #2f855a;
+}
+
+.page.next {
+  font-size: 1.25rem;
+}
+
+.sidebar {
+  width: 100%;
+  max-width: 33.33%;
+  padding: 1rem;
+}
+
+.sidebar-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.comment {
+  background: #fff;
+  padding: 1rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1rem;
+}
+
+.comment-author {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.comment-text {
+  margin-bottom: 1rem;
+}
+
+.read-article-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  background: var(--first-color);
+  color: #fff;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 0.25rem;
+  transition: background 0.3s ease;
+}
+
+.read-article-button:hover {
+  background: var(--second-color);
+}
