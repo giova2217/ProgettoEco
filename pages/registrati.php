@@ -1,3 +1,51 @@
+<?php
+// Starting a session
+session_start();
+
+// Include necessary files
+include_once '../models/User.php'; // Include the User model
+include_once '../includes/db_connect.php'; // Include the database connection
+
+// Check if form is submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Validate username and password
+    $username = trim($_POST["username"]);
+    $password = $_POST["password"];
+    $confirmPassword = $_POST["confirm_password"];
+
+    // Check if passwords match
+    if ($password !== $confirmPassword) {
+        echo "Errore: Le password non coincidono.";
+        exit;
+    }
+
+    // Check if user already exists
+    $user = new User($conn); // Create a new User object
+    if ($user->userExists($username)) {
+        echo "Errore: L'utente esiste gi&agrave;.";
+        exit;
+    }
+
+    // Hash the password
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+    // Insert the user into the database
+    $inserted = $user->insertUser($username, $hashedPassword);
+
+    // Check for successful insertion
+    if ($inserted) {
+        // Inserting the username in the created session
+        $_SESSION['username'] = $username;
+        echo "<script type='text/javascript'>alert('Utente registrato correttamente.');</script>";
+    } else {
+        echo "<script type='text/javascript'>alert('Errore durante la registrazione dell'utente.');</script>";
+    }
+}
+
+// Close database connection
+mysqli_close($conn);
+?>
+
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -73,18 +121,18 @@
 
   <!--==================== LOGIN ====================-->
   <div class="login" id="login">
-    <form action="" class="login__form">
+    <form action="../controllers/login.php" name="login_form" method="POST" class="login__form">
       <h2 class="login__title">Accedi</h2>
       
       <div class="login__group">
         <div>
           <label for="username" class="login__label">Nome utente</label>
-          <input type="text" placeholder="Scrivi il tuo username" id="username" class="login__input">
+          <input type="text" name="username" placeholder="Inserisci il tuo username" id="username" class="login__input" required>
         </div>
           
         <div>
           <label for="password" class="login__label">Password</label>
-          <input type="password" placeholder="Scrivi la tua password" id="password" class="login__input">
+          <input type="password" name="password" placeholder="Inserisci la tua password" id="password" class="login__input" required>
         </div>
       </div>
 
@@ -93,8 +141,8 @@
         <p class="login__signup">
           Non hai ancora creato un account? <a href="registrati.php">Registrati</a>
         </p>
-         <a href="#" class="login__forgot">
-          You forgot your password
+        <a href="#" class="login__forgot">
+          Password dimenticata?
         </a> -->
 
         <button type="submit" class="login__button">Accedi</button>
@@ -107,18 +155,23 @@
   <div style="width: 100%; height: 150px;"></div>
 
   <!--==================== SIGNUP ====================-->
-  <form action="" class="login__form">
+  <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post" class="login__form">
     <h2 class="login__title">Registrati</h2>
     
     <div class="login__group">
       <div>
         <label for="username" class="login__label">Nome utente</label>
-        <input type="text" placeholder="Inserisci il tuo username" id="username" class="login__input">
+        <input type="text" placeholder="Inserisci il tuo username" id="username" name="username" class="login__input" required>
       </div>
         
       <div>
         <label for="password" class="login__label">Password</label>
-        <input type="password" placeholder="Inserisci una password" class="login__input">
+        <input type="password" placeholder="Inserisci una password" name="password" class="login__input" required>
+      </div>
+
+      <div>
+        <label for="confirm_password" class="login__label">Conferma password</label>
+        <input type="password" placeholder="Inserisci la stessa password" name="confirm_password" class="login__input" required>
       </div>
     </div>
 

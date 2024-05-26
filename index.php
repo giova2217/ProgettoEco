@@ -1,3 +1,8 @@
+<?php
+// Starting a session
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -71,18 +76,18 @@
 
   <!--==================== LOGIN ====================-->
   <div class="login" id="login">
-    <form action="" class="login__form">
+    <form action="controllers/login.php" name="login_form" method="POST" class="login__form">
       <h2 class="login__title">Accedi</h2>
       
       <div class="login__group">
         <div>
           <label for="username" class="login__label">Nome utente</label>
-          <input type="text" placeholder="Scrivi il tuo username" id="username" class="login__input">
+          <input type="text" name="username" placeholder="Inserisci il tuo username" id="username" class="login__input" required>
         </div>
           
         <div>
           <label for="password" class="login__label">Password</label>
-          <input type="password" placeholder="Scrivi la tua password" id="password" class="login__input">
+          <input type="password" name="password" placeholder="Inserisci la tua password" id="password" class="login__input" required>
         </div>
       </div>
 
@@ -91,7 +96,7 @@
           Non hai ancora creato un account? <a href="./pages/registrati.php">Registrati</a>
         </p>
         <!-- <a href="#" class="login__forgot">
-          You forgot your password
+          Password dimenticata?
         </a> -->
 
         <button type="submit" class="login__button">Accedi</button>
@@ -112,19 +117,19 @@
           ottenuta dalla conversione della luce del sole in
           elettricità o calore utilizzabile. Questa forma di energia è ecologica...
         </p>
-        <a href="pages/articolo.php" class="articleLink">Leggi altro</a>
+        <a href="pages/articolo.php?id=7" class="articleLink">Leggi altro</a>
       </div>
 
       <div class="box" id="item2">
         <p class="category">Ambiente</p>
         <h2 class="title">Le implicazioni distruttive del disboscamento</h2>
-        <a href="pages/articolo.php" class="articleLink">Leggi altro</a>
+        <a href="pages/articolo.php?id=8" class="articleLink">Leggi altro</a>
       </div>
 
       <div class="box" id="item3">
         <p class="category">Riciclaggio</p>
         <h2 class="title">Il potere trasformativo del riciclaggio</h2>
-        <a href="pages/articolo.php" class="articleLink">Leggi altro</a>
+        <a href="pages/articolo.php?id=9" class="articleLink">Leggi altro</a>
       </div>
     </section>
     

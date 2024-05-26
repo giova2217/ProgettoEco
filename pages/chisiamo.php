@@ -1,3 +1,8 @@
+<?php
+// Starting a session
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -74,18 +79,18 @@
 
   <!--==================== LOGIN ====================-->
   <div class="login" id="login">
-    <form action="" class="login__form">
+    <form action="../controllers/login.php" name="login_form" method="POST" class="login__form">
       <h2 class="login__title">Accedi</h2>
       
       <div class="login__group">
         <div>
           <label for="username" class="login__label">Nome utente</label>
-          <input type="text" placeholder="Scrivi il tuo username" id="username" class="login__input">
+          <input type="text" name="username" placeholder="Inserisci il tuo username" id="username" class="login__input" required>
         </div>
           
         <div>
           <label for="password" class="login__label">Password</label>
-          <input type="password" placeholder="Scrivi la tua password" id="password" class="login__input">
+          <input type="password" name="password" placeholder="Inserisci la tua password" id="password" class="login__input" required>
         </div>
       </div>
 
@@ -94,7 +99,7 @@
           Non hai ancora creato un account? <a href="registrati.php">Registrati</a>
         </p>
         <!-- <a href="#" class="login__forgot">
-          You forgot your password
+          Password dimenticata?
         </a> -->
 
         <button type="submit" class="login__button">Accedi</button>
@@ -105,8 +110,8 @@
   </div>
   
   <div style="width: 100%; height: 150px;"></div>
-
-  <main>
+  <!--==================== MAIN ====================-->
+  <main class="main">
     <section class="row-div" id="section2" style="scroll-margin-top: 90px;">
       <div class="row-content fade-in-left">
         <h1 class="title">Il nostro progetto</h1>

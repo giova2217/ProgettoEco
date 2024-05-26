@@ -1,3 +1,8 @@
+<?php include_once '../controllers/fetch_articles.php'; 
+// Starting a session
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -64,28 +69,29 @@
 
   <!--==================== SEARCH ====================-->
   <div class="search" id="search">
-    <form action="" class="search__form">
+    <form action="" class="search__form" id="searchForm">
       <i class="ri-search-line search__icon"></i>
-      <input type="search" placeholder="Cosa stai cercando?" class="search__input">
-    </form>
+      <input type="search" id="searchInput" placeholder="Cosa stai cercando?" class="search__input">
+
+    </form>    
 
     <i class="ri-close-line search__close" id="search-close"></i>
   </div>
 
   <!--==================== LOGIN ====================-->
   <div class="login" id="login">
-    <form action="" class="login__form">
+    <form action="../controllers/login.php" name="login_form" method="POST" class="login__form">
       <h2 class="login__title">Accedi</h2>
       
       <div class="login__group">
         <div>
           <label for="username" class="login__label">Nome utente</label>
-          <input type="text" placeholder="Scrivi il tuo username" id="username" class="login__input">
+          <input type="text" name="username" placeholder="Inserisci il tuo username" id="username" class="login__input" required>
         </div>
           
         <div>
           <label for="password" class="login__label">Password</label>
-          <input type="password" placeholder="Scrivi la tua password" id="password" class="login__input">
+          <input type="password" name="password" placeholder="Inserisci la tua password" id="password" class="login__input" required>
         </div>
       </div>
 
@@ -94,7 +100,7 @@
           Non hai ancora creato un account? <a href="registrati.php">Registrati</a>
         </p>
         <!-- <a href="#" class="login__forgot">
-          You forgot your password
+          Password dimenticata?
         </a> -->
 
         <button type="submit" class="login__button">Accedi</button>
@@ -105,50 +111,89 @@
   </div>
   
   <div style="width: 100%; height: 100px;"></div>
-  <!--==================== ARTICLES LIST ====================-->
-  <div class="container">
-    <!-- Posts Section -->
-    <section class="posts-section">
-      <article class="post">
-        <!-- Article Image -->
-        <a class="image-link" draggable="false">
-          <img src="../assets/images/article1.jpg" alt="Energia solare" draggable="false">
-        </a>
-        <div class="post-content">
-          <a class="category">Energia</a>
-          <a href="#" class="title">Energia solare</a>
-          <span class="meta">Scritto da <span class="author">Giorgio</span>, il 16 maggio 2024</span>
-          <p class="excerpt">L'energia solare è una fonte di energia rinnovabile ottenuta dalla conversione della luce del sole in elettricità o calore utilizzabile. Questa forma di energia è ecologica...</p>
-          <a href="#" class="read-more">Continua la lettura</i></a>
+  <!--==================== MAIN ====================-->
+  <main>
+    <!--==================== ARTICLE SEARCH ====================-->
+
+    <!--==================== ARTICLES LIST ====================-->
+    <div class="container">
+      <!-- Posts Section -->
+      <section class="posts-section">
+
+        <?php
+          // Check if there are any articles
+          if (!empty($articles)) {
+            // Maximum length of the article's body to truncate
+            $max_length = 500;
+            
+            // Output articles
+            foreach ($articles as $article) {
+              $articleId = $article['id'];
+              $title = $article['title'];
+              $complete_body = $article['body'];
+              $writer = $articleModel->getUsernameByArticleId($articleId);
+              $creationDate = $article['creation_date'];
+              $category = $articleModel->getCategoryNameFromArticleId($articleId);
+              $imagePath = $articleModel->getImagePathByArticleId($articleId);
+
+              // Truncate the string
+              $body = (strlen($complete_body) > $max_length) ? substr($complete_body, 0, $max_length) . '...' : $complete_body;
+
+        ?>
+              <!-- Article Container -->
+              <article class="post">
+                <!-- Article Image -->
+                <a class="image-link" draggable="false">
+                  <img src="<?php echo $imagePath;?>" alt="<?php echo $title; ?>" draggable="false">
+                </a>
+                <div class="post-content">
+                  <a class="category"><?php echo $category; ?></a>
+                  <a href="articolo.php?id=<?php echo $articleId; ?>" class="title"><?php echo $title; ?></a>
+                  <span class="meta">Scritto da <span class="author"><?php echo $writer; ?></span>, il <?php echo $creationDate; ?></span>
+                  <p class="excerpt"><?php echo $body; ?></p>
+                  <a href="articolo.php?id=<?php echo $articleId; ?>" class="read-more">Continua la lettura</i></a>
+                </div>
+              </article>
+        <?php
+            }
+          } else {
+              echo "<p>Nessun articolo trovato.</p>";
+          }
+        ?>
+
+        <!--
+        <div class="pagination-container">
+          <a href="#" class="pagination-button active">1</a>
+          <a href="#" class="pagination-button">2</a>
+          <a href="#" class="pagination-button arrow">&rarr;</a>
         </div>
-      </article>
+        -->
+      </section>
 
-      <div class="pagination-container">
-        <a href="#" class="pagination-button active">1</a>
-        <a href="#" class="pagination-button">2</a>
-        <a href="#" class="pagination-button arrow">&rarr;</a>
-      </div>
-    </section>
+      <!-- Sidebar Section -->
+      <aside class="sidebar">
+        <h2 class="sidebar-title">Ultimi commenti</h2>
 
-    <!-- Sidebar Section -->
-    <aside class="sidebar">
-      <h2 class="sidebar-title">Ultimi commenti</h2>
+        <!-- Commenti -->
+        <div class="comment">
+          <p class="comment-author">Marco</p>
+          <p class="comment-text">Bell'articolo.</p>
+          <a href="#" class="read-article-button">Leggi l'articolo</a>
+        </div>
+      </aside>
 
-      <!-- Commenti -->
-      <div class="comment">
-        <p class="comment-author">Marco</p>
-        <p class="comment-text">Bell'articolo.</p>
-        <a href="#" class="read-article-button">Leggi l'articolo</a>
-      </div>
-    </aside>
+    </div>
 
-  </div>
-
-  <!--==================== FOOTER ====================-->
-  <?php @include("../includes/footer.html"); ?>
+    <!--==================== FOOTER ====================-->
+    <?php @include("../includes/footer.html"); ?>
   </main>
 
   <!--=============== MAIN JS ===============-->
   <script src="../assets/main.js"></script>  
 </body>
 </html>
+
+<?php
+  // Closing database connection
+  mysqli_close($conn);
+?>

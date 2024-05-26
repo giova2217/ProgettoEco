@@ -469,7 +469,7 @@ img {
   grid-row: 1 / span 2;
   background-size: cover;
   background-position: center;
-  background-image: url('../images/article1.jpg');
+  background-image: url('../images/featured-articles/article1.jpg');
 }
 
 #item2 {
@@ -477,7 +477,7 @@ img {
   grid-row: 1 / 2;
   background-size: cover;
   background-position: center;
-  background-image: url('../images/article2.jpg');
+  background-image: url('../images/featured-articles/article2.jpg');
 }
 
 #item3 {
@@ -485,7 +485,7 @@ img {
   grid-row: 2 / 3;
   background-size: cover;
   background-position: center;
-  background-image: url('../images/article3.jpg');
+  background-image: url('../images/featured-articles/article3.jpg');
 }
 
 #item1 .category {
@@ -562,11 +562,6 @@ img {
     grid-row: 3 / 4;
   }
 }
-
-/*=============== ARTICLES LIST ===============*/
-
-
-/*=============== ABOUT US ===============*/
 
 /*=============== FOOTER ===============*/
 footer {
