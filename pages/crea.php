@@ -1,3 +1,7 @@
+<?php
+// Starting a session
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -73,18 +77,18 @@
 
   <!--==================== LOGIN ====================-->
   <div class="login" id="login">
-    <form action="" class="login__form">
+    <form action="../controllers/login.php" name="login_form" method="POST" class="login__form">
       <h2 class="login__title">Accedi</h2>
       
       <div class="login__group">
         <div>
           <label for="username" class="login__label">Nome utente</label>
-          <input type="text" placeholder="Scrivi il tuo username" id="username" class="login__input">
+          <input type="text" name="username" placeholder="Inserisci il tuo username" id="username" class="login__input" required>
         </div>
           
         <div>
           <label for="password" class="login__label">Password</label>
-          <input type="password" placeholder="Scrivi la tua password" id="password" class="login__input">
+          <input type="password" name="password" placeholder="Inserisci la tua password" id="password" class="login__input" required>
         </div>
       </div>
 
@@ -93,7 +97,7 @@
           Non hai ancora creato un account? <a href="registrati.php">Registrati</a>
         </p>
         <!-- <a href="#" class="login__forgot">
-          You forgot your password
+          Password dimenticata?
         </a> -->
 
         <button type="submit" class="login__button">Accedi</button>
@@ -104,36 +108,42 @@
   </div>
   
   <div style="width: 100%; height: 150px;"></div>
+  <!--==================== MAIN ====================-->
+  <main class="main">
+    <!--==================== CREATION SECTION ====================-->
+    <form action="../controllers/create_article.php" method="post" class="login__form" name="create_article" enctype="multipart/form-data">
+      <h2 class="login__title">Pubblica un nuovo articolo</h2>
+      
+      <div class="login__group">
+        <div>
+          <label for="article-name" class="login__label">Inserisci il titolo dell'articolo</label>
+          <input type="text" placeholder="Inserisci un titolo" id="article-name" name="article-name" class="login__input" required>
+        </div>
+          
+        <div>
+          <label for="article-body" class="login__label">Inserisci la descrizione dell'articolo</label>
+          <!--
+          <textarea rows="4" cols="50" name="article-body" form="create_article" placeholder="Inserisci una descrizione" class="login__input" style="font-family: 'Barlow Condensed', sans-serif; font-size: medium; resize: none"></textarea>
+          -->
+          <input type="text" placeholder="Inserisci una descrizione" name="article-body" class="login__input">
+        </div>
 
-  <!--==================== CREATION SECTION ====================-->
-  <form action="" class="login__form" name="create">
-    <h2 class="login__title">Pubblica un nuovo articolo</h2>
-    
-    <div class="login__group">
-      <div>
-        <label for="article-name" class="login__label">Inserisci il titolo dell'articolo</label>
-        <input type="text" placeholder="Inserisci un titolo" id="article-name" class="login__input" required>
-      </div>
+        <div>
+          <label for="article-image" class="login__label">Inserisci un'immagine</label>
+          <input class="login__input" type="file" id="article-image" name="article-image" accept="image/png, image/jpeg"/>
+        </div>
         
-      <div>
-        <label for="article-body" class="login__label">Inserisci la descrizione dell'articolo</label>
-        <textarea rows="4" cols="50" name="article-body" form="create" placeholder="Inserisci una descrizione" class="login__input" style="font-family: 'Barlow Condensed', sans-serif; font-size: medium; resize: none"></textarea>
-        <!--
-        <input type="text" placeholder="Inserisci una descrizione" class="login__input">
-        -->
+        <div>
+          <label for="article-category" class="login__label">Seleziona la categoria da assegnare all'articolo</label>
+          <?php include_once '../controllers/fetch_categories.php'; ?>
+        </div>
       </div>
 
-      <div>
-        <label for="article-image" class="login__label">Inserisci un'immagine</label>
-        <input class="login__input" type="file" id="article-image" name="article-image" accept="image/png, image/jpeg" />
-      </div>
-    </div>
+      <button type="submit" class="login__button">Pubblica</button>
+    </form>
 
-    <button type="submit" class="login__button">Pubblica</button>
-  </form>
-
-  <!--==================== FOOTER ====================-->
-  <?php @include("../includes/footer.html"); ?>
+    <!--==================== FOOTER ====================-->
+    <?php @include("../includes/footer.html"); ?>
   </main>
 
   <!--=============== MAIN JS ===============-->
