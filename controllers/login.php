@@ -22,15 +22,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['username'] = $loggedInUser['username'];
 
         echo "<script type='text/javascript'>alert('Accesso riuscito.');
-                window.location.href = '../index.php';  
+                window.location.href = '../views/home.php';  
               </script>";
         exit();
     } else {
         session_destroy();
         echo "<script type='text/javascript'>alert('Accesso fallito.');
-                window.location.href = '../index.php';  
+                window.location.href = '../views/home.php';  
               </script>";
         exit();
     }
 }
+
+
+// Closing the database connection
+mysqli_close($conn);
 ?>

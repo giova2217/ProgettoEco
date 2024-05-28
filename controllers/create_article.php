@@ -17,6 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	// Validating article details
 	$articleName = trim($_POST["article-name"]);
 	$articleBody = $_POST["article-body"];
+	$articleBody = nl2br($articleBody);
 	$category_id = $_POST["category-id"];
 
 	// Getting user_id from the User model
@@ -52,7 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	// Redirecting after article creation
 	if ($newArticleId) {
 		// If the article was created successfully, redirect to the newly created article page
-		header("Location: ../pages/articolo.php?id=" . $newArticleId);
+		header("Location: ../views/articolo.php?id=" . $newArticleId);
 		exit(); // Exit to ensure no further code execution after redirect
 	} else {
 		// Error handling if article creation failed
