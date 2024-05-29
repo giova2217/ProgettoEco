@@ -2,9 +2,8 @@
 // Starting a session
 session_start();
 
-// Include necessary files
-include_once '../models/User.php'; // Include the User model
-include_once '../includes/db_connect.php'; // Include the database connection
+include_once '../models/User.php'; // User model
+include_once '../includes/db_connect.php'; // Database connection
 
 // Check if form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -36,6 +35,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($inserted) {
         // Inserting the username in the created session
         $_SESSION['username'] = $username;
+        $insertedUserId = mysqli_insert_id($this->conn);
+        $_SESSION['user_id'] = $insertedUserId;
+        
         echo "<script type='text/javascript'>alert('Registrazione effettuata.');
                 window.location.href = '.../views/home.php';  
               </script>";

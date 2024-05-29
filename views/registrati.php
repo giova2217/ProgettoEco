@@ -19,7 +19,7 @@ session_start();
 <body>
 <body>
 	<!--==================== HEADER ====================-->
-	<?php @include("../includes/header.html"); ?>
+	<?php @include("../includes/header.php"); ?>
   
   <div style="width: 100%; height: 150px;"></div>
   <main class="main">

@@ -20,7 +20,7 @@ session_start();
 </head>
 <body>
   <!--==================== HEADER ====================-->
-	<?php @include("../includes/header.html"); ?>
+	<?php @include("../includes/header.php"); ?>
   
   <div style="width: 100%; height: 150px;"></div>
   <!--==================== MAIN ====================-->

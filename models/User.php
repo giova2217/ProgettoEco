@@ -21,15 +21,18 @@ class User {
 	}
 
 	public function insertUser($username, $password) {
-		$query = "INSERT INTO users (username, password, creation_date) VALUES (?, ?, NOW())";
-		$stmt = mysqli_prepare($this->conn, $query);
-		mysqli_stmt_bind_param($stmt, "ss", $username, $password);
-		$result = mysqli_stmt_execute($stmt);
-		
-		mysqli_stmt_close($stmt);
-		
-		return $result;
+    $query = "INSERT INTO users (username, password, creation_date) VALUES (?, ?, NOW())";
+    $stmt = mysqli_prepare($this->conn, $query);
+    mysqli_stmt_bind_param($stmt, "ss", $username, $password);
+    $result = mysqli_stmt_execute($stmt);
+
+    $newUserId = mysqli_insert_id($this->conn);
+
+    mysqli_stmt_close($stmt);
+
+    return $newUserId;
 	}
+
 
 	public function login($username, $password) {
 		$query = "SELECT id, username, password FROM users WHERE username = ?";

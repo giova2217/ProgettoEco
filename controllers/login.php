@@ -2,8 +2,7 @@
 // Starting a session
 session_start();
 
-// Include necessary files
-require_once '../models/User.php';
+require_once '../models/User.php'; // User model
 require_once '../includes/db_connect.php'; // Database connection
 
 // Check if form is submitted

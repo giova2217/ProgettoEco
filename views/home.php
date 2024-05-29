@@ -18,7 +18,7 @@ session_start();
 </head>
 <body>
   <!--==================== HEADER ====================-->
-  <?php @include("../includes/header.html"); ?>
+  <?php @include("../includes/header.php"); ?>
 
   <!--==================== MAIN ====================-->
   <main class="main">
@@ -37,13 +37,13 @@ session_start();
       <div class="box" id="item2">
         <p class="category">Ambiente</p>
         <h2 class="title">Le implicazioni distruttive del disboscamento</h2>
-        <a href="articolo.php?id=8" class="articleLink">Leggi altro</a>
+        <a href="articolo.php?id=19" class="articleLink">Leggi altro</a>
       </div>
 
       <div class="box" id="item3">
         <p class="category">Riciclaggio</p>
         <h2 class="title">Il potere trasformativo del riciclaggio</h2>
-        <a href="articolo.php?id=9" class="articleLink">Leggi altro</a>
+        <a href="articolo.php?id=20" class="articleLink">Leggi altro</a>
       </div>
     </section>
   </main>

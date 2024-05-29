@@ -52,7 +52,7 @@ session_start();
 <body>
 <body>
 	<!--==================== HEADER ====================-->
-	<?php @include("../includes/header.html"); ?>
+	<?php @include("../includes/header.php"); ?>
   
   <div style="width: 100%; height: 100px;"></div>
   <!--==================== MAIN ====================-->
@@ -89,16 +89,54 @@ session_start();
                 <p class="excerpt"><?php echo $body; ?></p>
               </div>
             </article>
+
+            <!-- Comment Form -->
+            <?php if (isset($_SESSION['username'])): ?>
+            <div class="post" style="margin: 0px 15vw; padding: 1rem;">
+              <h2>Lascia un commento</h2>
+              <form action="../controllers/add_comment.php" method="POST">
+                <textarea name="comment" rows="5" required style="resize: none;" class="login__input"></textarea>
+                <input type="hidden" name="article_id" value="<?php echo $article_id; ?>">
+                <button type="submit" class="login__button">Invia</button>
+              </form>
+            </div>
+            <?php else: ?>
+            <p>Devi essere <a href="login.php">loggato</a> per lasciare un commento.</p>
+            <?php endif; ?>
+            
+            <h1 class="post" style="margin: 1rem 15vw; padding: 1rem; text-align: center;">Commenti dei lettori</h1>
+
+            <!-- Display Comments -->
+            <?php
+              $comments = $articleModel->getCommentsByArticleId($article_id);
+
+              if ($comments) {
+                foreach ($comments as $comment) {
+                  $commentText = $comment['content'];
+                  $commentDate = $comment['date'];
+                  $userId = $comment['user_id'];
+                  $username = $articleModel->getUsernameByUserId($userId);
+                  ?>
+                  <div class="post post-content" style="margin: 1rem 15vw; padding: 1rem;">
+                    <p class="author"><?php echo $username; ?></p>
+                    <p><?php echo $commentText; ?></p>
+                    <span class="meta"><?php echo $commentDate; ?></span>
+                  </div>
+                  <?php
+                }
+              } else {
+                echo "<p class='post post-content' style='margin: 1rem 15vw; padding: 1rem;'>Ancora non &egrave; stato scritto nessun commento.</p>";
+              }
+            ?>
+
             <?php
         } else {
             echo "Articolo non trovato.";
         }
       } else {
-        echo "Non &egrave; stato fornito nessun id di un articolo.";
+        echo "Non è stato fornito nessun id di un articolo.";
       }
     ?>
-
-    <!-- Comments -->
   </main>
 
   <!--==================== FOOTER ====================-->

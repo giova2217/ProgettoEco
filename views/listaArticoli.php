@@ -20,7 +20,7 @@ session_start();
 </head>
 <body>
 	<!--==================== HEADER ====================-->
-	<?php @include("../includes/header.html"); ?>
+	<?php @include("../includes/header.php"); ?>
   
   <div style="width: 100%; height: 100px;"></div>
   <!--==================== MAIN ====================-->
@@ -81,17 +81,34 @@ session_start();
         </div>
         -->
       </section>
-
+      
       <!-- Sidebar Section -->
       <aside class="sidebar">
-        <h2 class="sidebar-title">Ultimi commenti</h2>
-
-        <!-- Commenti -->
-        <div class="comment">
-          <p class="comment-author">Marco</p>
-          <p class="comment-text">Bell'articolo.</p>
-          <a href="#" class="read-article-button">Leggi l'articolo</a>
-        </div>
+        <?php $commentsLimit = 5 ?>
+        <h2 class="sidebar-title">Ultimi <?= $commentsLimit ?> commenti</h2>
+        <?php
+          require_once '../models/Comment.php'; // Comment model
+          $commentModel = new Comment($conn);
+          $latestComments = $commentModel->getLatestComments($commentsLimit);
+          
+          if (!empty($latestComments)) {
+            foreach ($latestComments as $comment) {
+              $commentContent = $comment['content'];
+              $commentAuthor = $comment['username'];
+              $articleId = $comment['article_id'];
+        ?>
+              <!-- Comments -->
+              <div class="comment">
+                <p class="comment-author"><?php echo $commentAuthor; ?></p>
+                <p class="comment-text"><?php echo $commentContent; ?></p>
+                <a href="articolo.php?id=<?php echo $articleId; ?>" class="read-article-button">Leggi l'articolo</a>
+              </div>
+        <?php
+            }
+          } else {
+            echo "<p>Nessun commento trovato.</p>";
+          }
+        ?>
       </aside>
     </div>
   </main>

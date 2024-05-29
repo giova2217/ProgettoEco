@@ -1,6 +1,5 @@
 <?php
-// Include database connection
-include_once '../includes/db_connect.php';
+include_once '../includes/db_connect.php'; // Database connection
 
 // Query to retrieve categories
 $query = "SELECT id, name FROM categories";
