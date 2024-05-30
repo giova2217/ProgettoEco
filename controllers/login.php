@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['username'] = $loggedInUser['username'];
 
         echo "<script type='text/javascript'>alert('Accesso riuscito.');
-                window.location.href = '../views/home.php';  
+                window.location.href = '../views/profilo.php';  
               </script>";
         exit();
     } else {

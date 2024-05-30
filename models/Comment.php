@@ -44,11 +44,11 @@ class Comment {
     }
 
     // Delete a comment
-    public function deleteComment($user_id, $comment_id) {
-        $query = "DELETE FROM comments WHERE id = ? AND user_id = ?";
+    public function deleteComment($comment_id) {
+        $query = "DELETE FROM comments WHERE id = ?";
         
         $stmt = $this->conn->prepare($query);
-        $stmt->bind_param("ii", $comment_id, $user_id);
+        $stmt->bind_param("i", $comment_id);
         $result = $stmt->execute();
         $stmt->close();
 
@@ -58,7 +58,7 @@ class Comment {
 
     // Get latest comments with a limit in the quantity given
     public function getLatestComments($limit) {
-      $query = "SELECT comments.content, comments.article_id, users.username 
+      $query = "SELECT comments.content, comments.article_id, users.username, comments.id, comments.date
                 FROM comments 
                 INNER JOIN users ON comments.user_id = users.id 
                 ORDER BY comments.date DESC 
@@ -75,7 +75,7 @@ class Comment {
     // Get all the comments written by an user
     public function getCommentsByUserId($user_id) {
         // Prepare the SQL query
-        $query = "SELECT * FROM comments WHERE user_id = ?";
+        $query = "SELECT * FROM comments WHERE user_id = ? ORDER BY date DESC";
         
         // Prepare the statement
         $stmt = mysqli_prepare($this->conn, $query);

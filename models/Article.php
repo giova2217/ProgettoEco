@@ -23,6 +23,18 @@ class Article {
         return $newArticleId; // Return the new article ID or false if INSERT failed
     }
     
+    public function getEveryArticle() {
+        // Getting all articles, regardless of approval status
+        $query = "SELECT * FROM articles ORDER BY creation_date DESC";
+        $result = mysqli_query($this->conn, $query);
+        $articles = [];
+        if ($result) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                $articles[] = $row;
+            }
+        }
+        return $articles;
+    }
 
     public function getApprovedArticles() {
         // Getting only the approved articles
@@ -35,6 +47,24 @@ class Article {
             }
         }
         return $articles;
+    }
+
+    public function approveArticle($article_id) {
+        $query = "
+            UPDATE articles
+            SET approved=1
+            WHERE id = $article_id
+        ";
+    
+        // Executing the query
+        $result = mysqli_query($this->conn, $query);
+    
+        // Checking if the query was successful
+        if ($result) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public function getArticleById($article_id) {
@@ -160,13 +190,13 @@ class Article {
         return $articles;
     }
     
-    public function deleteArticle($user_id, $article_id) {
+    public function deleteArticle($article_id) {
         // Prepare the DELETE SQL query
-        $query = "DELETE FROM articles WHERE id = ? AND user_id = ?";
+        $query = "DELETE FROM articles WHERE id = ?";
         $stmt = $this->conn->prepare($query);
 
         // Bind the parameters
-        $stmt->bind_param("ii", $article_id, $user_id);
+        $stmt->bind_param("i", $article_id);
 
         // Execute the statement
         $stmt->execute();
@@ -182,6 +212,48 @@ class Article {
 
         // Close the statement
         $stmt->close();
+    }
+
+    public function getFeaturedArticles($conn) {
+        $query = "SELECT articles.*, categories.name as category_name FROM articles
+                  JOIN featured_articles ON articles.id = featured_articles.article_id
+                  JOIN categories ON articles.category_id = categories.id
+                  WHERE articles.approved = 1";
+        $result = $conn->query($query);
+    
+        if ($result === false) {
+            echo "Errore: " . $conn->error;
+            return false;
+        }
+        $featuredArticles = $result->fetch_all(MYSQLI_ASSOC);
+        
+        return $featuredArticles;
+    }
+
+    public function getWriterId($article_id) {
+        // Prepare the SQL query
+        $query = "SELECT user_id FROM articles WHERE id = ?";
+        
+        // Prepare the statement
+        $stmt = mysqli_prepare($this->conn, $query);
+    
+        // Bind the article_id parameter
+        mysqli_stmt_bind_param($stmt, "i", $article_id);
+    
+        // Execute the statement
+        mysqli_stmt_execute($stmt);
+    
+        // Bind the result to a variable
+        mysqli_stmt_bind_result($stmt, $user_id);
+    
+        // Fetch the result
+        mysqli_stmt_fetch($stmt);
+    
+        // Close the statement
+        mysqli_stmt_close($stmt);
+    
+        // Return the writer's user_id
+        return $user_id;
     }
 }
 ?>

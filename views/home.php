@@ -1,6 +1,8 @@
 <?php
 // Starting a session
 session_start();
+
+include_once '../controllers/fetch_featured_articles.php';  // Getting the featured articles' info
 ?>
 
 <!DOCTYPE html>
@@ -20,31 +22,65 @@ session_start();
   <!--==================== HEADER ====================-->
   <?php @include("../includes/header.php"); ?>
 
+  <div style="width: 100%; height: 100px;"></div>
   <!--==================== MAIN ====================-->
   <main class="main">
     <!--==================== FEATURED ARTICLES ====================-->
+    <section class="featured">
+      <p>Articoli in evidenza</p>
+    </section>
+
     <section class="wrapper">
-      <div class="box" id="item1">
-        <p class="category">Energia</p>
-        <h2 class="title">Energia solare</h2>
-        <p class="description">L'energia solare è una fonte di energia rinnovabile
-          ottenuta dalla conversione della luce del sole in
-          elettricità o calore utilizzabile. Questa forma di energia è ecologica...
-        </p>
-        <a href="articolo.php?id=7" class="articleLink">Leggi altro</a>
-      </div>
+    <?php
+      if (!empty($featuredArticles)):
+        // Maximum length of the article's body to truncate
+        $max_length = 100;
+        
+        // Number of articles in the foreach loop
+        $cont = 0;
 
-      <div class="box" id="item2">
-        <p class="category">Ambiente</p>
-        <h2 class="title">Le implicazioni distruttive del disboscamento</h2>
-        <a href="articolo.php?id=19" class="articleLink">Leggi altro</a>
-      </div>
+        // Output featured articles
+        foreach ($featuredArticles as $featuredArticle):
+          $cont++;
+          $articleId = $featuredArticle['id'];
+          $title = $featuredArticle['title'];
+          $complete_body = $featuredArticle['body'];
+          $writer = $articleModel->getUsernameByArticleId($articleId);
+          $creationDate = $featuredArticle['creation_date'];
+          $category = $articleModel->getCategoryNameFromArticleId($articleId);
+          $imagePath = $articleModel->getImagePathByArticleId($articleId);
+          
+          // Truncate the string
+          $body = (strlen($complete_body) > $max_length) ? substr($complete_body, 0, $max_length) . '...' : $complete_body;
+          $body = htmlspecialchars($body);
+          
+          if ($cont == 1):
+    ?>      
+            <div class="box" id="item<?= $cont; ?>" style="background-image: url(<?=$imagePath;?>);">
+              <p class="category"><?= $category; ?></p>
+              <h2 class="title"><?= $title; ?></h2>
+              <p class="description"><?= $body; ?></p>
+              <a href="articolo.php?id=<?= $articleId; ?>" class="articleLink">Continua</a>
+            </div>
 
-      <div class="box" id="item3">
-        <p class="category">Riciclaggio</p>
-        <h2 class="title">Il potere trasformativo del riciclaggio</h2>
-        <a href="articolo.php?id=20" class="articleLink">Leggi altro</a>
-      </div>
+      <?php
+          else: ?>
+            <div class="box" id="item<?= $cont; ?>" style="background-image: url(<?=$imagePath;?>);">
+              <p class="category"><?= $category; ?></p>
+              <h2 class="title"><?= $title; ?></h2>
+              <a href="articolo.php?id=<?= $articleId; ?>" class="articleLink">Leggi</a>
+            </div>
+      <?php
+          endif;
+        endforeach;
+      else:
+        echo "<p>Nessun articolo in evidenza trovato.</p>";
+      endif;
+      ?>
+    </section>
+
+    <section class="read-articles">
+      <a href="listaArticoli.php">Leggi gli articoli degli altri utenti...</a>
     </section>
   </main>
 

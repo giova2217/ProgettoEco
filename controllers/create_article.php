@@ -4,12 +4,13 @@ session_start();
 
 require_once '../models/Article.php'; // Article model
 require_once '../includes/db_connect.php'; // Database connection
-require_once '../models/User.php'; // User model
 
 // Check if form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-	if(!isset($_SESSION['username'])) {
-		echo "Devi essere connesso ad un account prima di pubblicare un articolo.";
+	if (!isset($_SESSION['username'])) {
+		echo "<script type='text/javascript'>alert('Devi autenticarti prima di creare un articolo.');
+						window.location.href = '../views/registrati.php';  
+					</script>";
 		exit();
 	}
 	
@@ -19,11 +20,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	$articleBody = nl2br($articleBody);
 	$category_id = $_POST["category-id"];
 
-	// Getting user_id from the User model
-	$userModel = new User($conn);
-	$user_id = $userModel->getUserIdFromUsername($_SESSION["username"]);
-	unset($userModel);
-	
+	$user_id = $_SESSION['user_id'];
+
 	// Defining the default image path
 	$defaultImagePath = "../assets/images/default.jpg";
 
@@ -51,12 +49,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 	// Redirecting after article creation
 	if ($newArticleId) {
+		// If the user is the admin (id = 1) the article will get approved automatically
+		if ($user_id == 1) {
+			// Approving the article
+			$approvalSuccess = $article->approveArticle($newArticleId);
+
+			echo "<script type='text/javascript'>alert('Articolo creato e approvato.');
+							window.location.href = '../views/articolo.php?id=$newArticleId'
+						</script>";
+			exit();
+		}
+
 		// If the article was created successfully, redirect to the newly created article page
 		header("Location: ../views/articolo.php?id=" . $newArticleId);
-		exit(); // Exit to ensure no further code execution after redirect
+		exit();
 	} else {
-		// Error handling if article creation failed
-		echo "<script type='text/javascript'>alert('Errore nella creazione dell'articolo.');</script>";
+		echo "<script type='text/javascript'>alert('Errore nella creazione dell'articolo.');
+						window.location.href = '../views/crea.php'
+					</script>";
+		exit();
 	}
 }
 ?>

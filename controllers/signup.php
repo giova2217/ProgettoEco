@@ -39,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['user_id'] = $insertedUserId;
         
         echo "<script type='text/javascript'>alert('Registrazione effettuata.');
-                window.location.href = '.../views/home.php';  
+                window.location.href = '.../views/profilo.php';  
               </script>";
         exit();
     } else {

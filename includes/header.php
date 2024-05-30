@@ -21,6 +21,14 @@
         <li class="nav__item" id="chisiamo">
           <a href="chisiamo.php" class="nav__link">Chi siamo</a>
         </li>
+        
+        <?php 
+        if (isset($_SESSION['username'])): ?>
+        <!-- Display Username when logged in -->
+          <li class="nav__item" id="profilo">
+            <a href="profilo.php" class="nav__link">Profilo</a>
+          </li>
+        <?php endif;?>
       </ul>
 
       <!-- Close button -->
@@ -30,13 +38,10 @@
     </div>
 
     <div class="nav__actions">
-      <!-- Search button -->
-      <i class="ri-search-line nav__search" id="search-btn"></i>
+      <!-- Search button (LEAVE LIKE THIS TO NOT HAVE BUGS)-->
+      <i id="search-btn"></i>
 
-      <?php if (isset($_SESSION['username'])): ?>
-        <!-- Display Username when logged in -->
-        <span class="nav__username"><?php echo "<a href='../views/profilo.php' class='nav__link' title='Vai al tuo profilo.'>" . htmlspecialchars($_SESSION['username']); "</a>"?></span>
-      <?php else: ?>
+      <?php if (!isset($_SESSION['username'])): ?>
         <!-- Login button when not logged in -->
         <i class="ri-user-line nav__login" id="login-btn"></i>
       <?php endif; ?>
@@ -47,16 +52,6 @@
       </div>
     </div>
   </nav>
-
-  <!--==================== SEARCH ====================-->
-  <div class="search" id="search">
-    <form action="" class="search__form">
-      <i class="ri-search-line search__icon"></i>
-      <input type="search" placeholder="Cosa stai cercando?" class="search__input">
-    </form>
-
-    <i class="ri-close-line search__close" id="search-close"></i>
-  </div>
 
   <!--==================== LOGIN ====================-->
   <div class="login" id="login">

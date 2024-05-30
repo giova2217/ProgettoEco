@@ -17,12 +17,16 @@ if (isset($_POST['comment']) && isset($_POST['article_id']) && isset($_SESSION['
     header("Location: ../views/articolo.php?id=" . $article_id);
     exit();
   } else {
-    echo "Errore durante l'inserimento del commento.";
+    echo "<script type='text/javascript'>alert('Errore durante l'inserimento del commento.');
+          </script>";
   }
 
   $stmt->close();
   $conn->close();
 } else {
-  echo "Dati mancanti.";
+  echo "<script type='text/javascript'>alert('Dati mancanti.');
+          window.location.href = '../views/listaArticoli.php
+        </script>";
+  exit();
 }
 ?>

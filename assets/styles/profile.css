@@ -1,0 +1,72 @@
+.post-content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.main-title {
+  padding: 1rem;
+}
+
+.sub-title {
+  padding: 1rem;
+}
+
+.items-list {
+  justify-content: center;
+  align-items: center;
+  padding-left: 1rem;
+}
+
+.items-list a:hover {
+  color: var(--first-color);
+}
+
+.title {
+  max-width: 100%;
+}
+
+.category:hover {
+  cursor: pointer;
+}
+
+a.read-article-button {
+  padding: 0;
+  width: 8rem;
+  height: 3rem;
+}
+
+.update-link {
+  background-color: hsl(183, 100%, 25%);
+}
+
+.update-link:hover {
+  background-color: hsl(112, 37%, 55%);
+}
+
+.delete-link {
+  background-color: red;
+}
+
+.delete-link:hover {
+  background-color: lightcoral;
+}
+
+.action-div {
+  display: flex;
+  gap: 10px;
+}
+
+.comment-content {
+  font-size: x-large;
+  margin: 1rem;
+}
+
+.comment-content .action-div a {
+  font-size: var(--normal-font-size);
+}
+
+.logout-div {
+  display: flex;
+  align-items: center;
+}
