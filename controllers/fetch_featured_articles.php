@@ -1,6 +1,6 @@
 <?php
-    include_once '../includes/db_connect.php'; // Database connection
-    include_once '../models/Article.php'; // Article model
+    require_once '../includes/db_connect.php'; // Database connection
+    require_once '../models/Article.php'; // Article model
 
     // Creating an instance of the Article model
     $articleModel = new Article($conn);

@@ -1,6 +1,14 @@
+a, p, span, b, a.title {
+  word-wrap: break-word;
+  white-space: normal;
+  overflow-wrap: break-word;
+  word-break: break-all;
+}
+
 .post-content {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  padding: 16px;
   gap: 20px;
 }
 
@@ -69,4 +77,37 @@ a.read-article-button {
 .logout-div {
   display: flex;
   align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+button.logout {
+  max-width: none;
+}
+
+@media screen and (max-width: 340px) {
+  .post-content {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+
+  a.read-article-button {
+    margin: 10px 0px;
+  }
+
+  .action-div {
+    display: block;
+  }
+  
+  .logout-div {
+    display: block;
+    padding: 1rem;
+  }
+
+  div.logout-div .sub-title {
+    padding: 1rem 0px;
+  }
+
+  .post-container {
+    width: 100%;
+  }
 }

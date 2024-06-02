@@ -191,28 +191,85 @@ class Article {
     }
     
     public function deleteArticle($article_id) {
-        // Prepare the DELETE SQL query
-        $query = "DELETE FROM articles WHERE id = ?";
+        // Get the image path of the article
+        $image_path = $this->getImagePath($article_id);
+        $default_image_path = "../assets/images/default.jpg";
+        
+        // Check if the image path exists in other articles and is not the default image
+        if ($image_path == $default_image_path || $this->imageExistsInOtherArticles($image_path, $article_id)) {
+            // Image path exists in other articles, so don't delete the image
+            $delete_query = "DELETE FROM articles WHERE id = ?";
+            $delete_stmt = $this->conn->prepare($delete_query);
+            $delete_stmt->bind_param("i", $article_id);
+            
+            if ($delete_stmt->execute()) {
+                $delete_stmt->close();
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            // Image path does not exist in other articles and is not the default one, delete the image
+            if ($this->deleteImage($image_path) && $this->deleteArticleFromDatabase($article_id)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+    
+    private function imageExistsInOtherArticles($image_path, $article_id) {
+        // Prepare the query to check if the image path exists in other articles
+        $query = "SELECT COUNT(id) AS count FROM articles WHERE image_path = ? AND id != ?";
         $stmt = $this->conn->prepare($query);
-
-        // Bind the parameters
-        $stmt->bind_param("i", $article_id);
-
-        // Execute the statement
+        $stmt->bind_param("si", $image_path, $article_id);
+        
+        // Execute the query
         $stmt->execute();
-
-        // Check if the article was deleted successfully
-        if ($stmt->affected_rows > 0) {
-            // Article deleted successfully
+        
+        // Get the result
+        $result = $stmt->get_result();
+        
+        // Fetch the count
+        $row = $result->fetch_assoc();
+        $count = $row['count'];
+        
+        // Check if the count is greater than 0
+        if ($count > 0) {
+            // Image path exists in other articles
+            $stmt->close();
             return true;
         } else {
-            // Article not found or user does not have permission to delete
+            // Image path does not exist in other articles
+            $stmt->close();
             return false;
         }
-
-        // Close the statement
-        $stmt->close();
     }
+    
+    private function deleteArticleFromDatabase($article_id) {
+        // Prepare the delete query
+        $delete_query = "DELETE FROM articles WHERE id = ?";
+        $delete_stmt = $this->conn->prepare($delete_query);
+        $delete_stmt->bind_param("i", $article_id);
+        
+        // Execute the delete query
+        if ($delete_stmt->execute()) {
+            $delete_stmt->close();
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
+    private function deleteImage($image_path) {
+        // Delete the image file from the project folder
+        if (unlink($image_path)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
 
     public function getFeaturedArticles($conn) {
         $query = "SELECT articles.*, categories.name as category_name FROM articles
@@ -230,7 +287,7 @@ class Article {
         return $featuredArticles;
     }
 
-    public function getWriterId($article_id) {
+    public function getAuthorId($article_id) {
         // Prepare the SQL query
         $query = "SELECT user_id FROM articles WHERE id = ?";
         
@@ -252,8 +309,30 @@ class Article {
         // Close the statement
         mysqli_stmt_close($stmt);
     
-        // Return the writer's user_id
+        // Return the author's user_id
         return $user_id;
     }
+
+    // Get image path by article ID
+    public function getImagePath($article_id) {
+        $image_path = null;
+        $query = "SELECT image_path FROM articles WHERE id = ?";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bind_param("i", $article_id);
+        $stmt->execute();
+        $stmt->store_result();
+
+        // Check if the article exists
+        if ($stmt->num_rows > 0) {
+            $stmt->bind_result($image_path);
+            $stmt->fetch();
+            $stmt->close();
+            return $image_path;
+        } else {
+            $stmt->close();
+            return false;
+        }
+    }
+    
 }
 ?>

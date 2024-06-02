@@ -230,9 +230,9 @@ $username = $_SESSION['username'];
 		<div class="logout-div">
 			<h2 class="sub-title">Vuoi disconnetterti?</h2>
 			<div class="post-container">
-				<section class="posts-section" style="max-width: none;">
+				<button class="logout">
 					<a href="../controllers/logout.php" class="read-article-button delete-link">Disconnettiti</a>
-				</section>
+					</button>
 			</div>
 		</div>
 	</main>

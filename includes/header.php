@@ -1,3 +1,7 @@
+<?php
+require_once "../controllers/csrf_token_controller.php"; // Controller that prevents CSRF attacks in the form
+?>
+
 <header class="header" id="header">
   <nav class="nav container">
     <a href="home.php" class="nav__logo" style="display: flex; align-items: center;">
@@ -61,14 +65,19 @@
       <div class="login__group">
         <div>
           <label for="username" class="login__label">Nome utente</label>
-          <input type="text" name="username" placeholder="Inserisci il tuo username" id="username" class="login__input" required>
+          <input type="text" name="username" placeholder="Inserisci il tuo username" id="username" class="login__input" required 
+          minlength="3" maxlength="15" pattern="^[a-zA-Z0-9_-]+$" title="&Egrave; consentito solo l'uso di lettere, numeri, trattini bassi e trattini.">
         </div>
           
         <div>
           <label for="password" class="login__label">Password</label>
-          <input type="password" name="password" placeholder="Inserisci la tua password" id="password" class="login__input" required>
+          <input type="password" name="password" placeholder="Inserisci la tua password" id="password" class="login__input" required 
+          minlength="8" maxlength="20" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,20}">
         </div>
       </div>
+      
+      <!-- Including CSRF token as hidden input field to prevent CSRF attacks -->
+      <input type="hidden" name="csrf_token" value="<?php echo csrf_token(); ?>" style="width: 0px; height: 0px;">
 
       <div>
         <p class="login__signup" style="font-size: 1rem;">
@@ -77,9 +86,10 @@
         <!-- <a href="#" class="login__forgot">
           Password dimenticata?
         </a> -->
-
-        <button type="submit" class="login__button">Accedi</button>
+        
       </div>
+
+      <button type="submit" class="login__button">Accedi</button>
     </form>
 
     <i class="ri-close-line login__close" id="login-close"></i>

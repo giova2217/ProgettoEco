@@ -56,7 +56,7 @@ session_start();
               <article class="post">
                 <!-- Article Image -->
                 <a class="image-link" draggable="false">
-                  <img src="<?php echo $imagePath;?>" alt="<?php echo $title; ?>" draggable="false">
+                  <img src="<?php echo $imagePath;?>" alt="<?php echo $title; ?>" loading="lazy" draggable="false" style="max-height: 600px;">
                 </a>
                 <div class="post-content">
                   <a class="category"><?php echo $category; ?></a>

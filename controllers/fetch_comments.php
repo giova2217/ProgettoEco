@@ -1,6 +1,6 @@
 <?php
-    include_once '../includes/db_connect.php'; // Database connection
-    include_once '../models/Comment.php'; // Comment model
+    require_once '../includes/db_connect.php'; // Database connection
+    require_once '../models/Comment.php'; // Comment model
 
     // Creating an instance of the Comment model
     $commentModel = new Comment($conn);

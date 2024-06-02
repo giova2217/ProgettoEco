@@ -1,31 +1,33 @@
 <?php
 session_start();
-include_once '../includes/db_connect.php';
+require_once '../includes/db_connect.php';
+require_once '../models/Comment.php';
 
+// Checking if comment data is set and user is logged in
 if (isset($_POST['comment']) && isset($_POST['article_id']) && isset($_SESSION['user_id'])) {
-  $comment = nl2br($_POST['comment']);
-  $article_id = $_POST['article_id'];
-  $user_id = $_SESSION['user_id'];
+  $commentContent = nl2br($_POST['comment']);
+  $articleId = $_POST['article_id'];
+  $userId = $_SESSION['user_id'];
 
-  // Save the comment to the database
-  $query = "INSERT INTO comments (article_id, user_id, content, date) VALUES (?, ?, ?, NOW())";
-  $stmt = $conn->prepare($query);
-  $stmt->bind_param("iis", $article_id, $user_id, $comment);
+  // Creating a new Comment object
+  $commentModel = new Comment($conn);
 
-  if ($stmt->execute()) {
+  // Saving the comment to the database
+  $inserted = $commentModel->createComment($userId, $articleId, $commentContent);
+
+  if ($inserted) {
     // Redirect back to the article page
-    header("Location: ../views/articolo.php?id=" . $article_id);
+    header("Location: ../views/articolo.php?id=" . $articleId);
     exit();
   } else {
-    echo "<script type='text/javascript'>alert('Errore durante l'inserimento del commento.');
-          </script>";
+    echo "<script type='text/javascript'>alert('Errore durante l'inserimento del commento.');</script>";
   }
 
-  $stmt->close();
+  // Close the database connection
   $conn->close();
 } else {
   echo "<script type='text/javascript'>alert('Dati mancanti.');
-          window.location.href = '../views/listaArticoli.php
+          window.location.href = '../views/listaArticoli.php';
         </script>";
   exit();
 }

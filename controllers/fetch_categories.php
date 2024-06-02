@@ -1,5 +1,5 @@
 <?php
-include_once '../includes/db_connect.php'; // Database connection
+require_once '../includes/db_connect.php'; // Database connection
 
 // Query to retrieve categories
 $query = "SELECT id, name FROM categories";
@@ -17,7 +17,6 @@ if ($result) {
         echo "<option value='$categoryId' style='color: #8beb7c;'>$categoryName</option>";
     }
     
-    // End select element
     echo '</select>';
 } else {
     echo "Errore nella ricezione delle categorie";
