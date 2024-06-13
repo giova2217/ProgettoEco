@@ -16,3 +16,7 @@ Every tip you give is more helpful than you think as I want to improve to get be
 ## License
 
 [Apache 2.0](https://choosealicense.com/licenses/apache-2.0/)
+
+## User credentials
+
+The admin password is 12345678, while the other users' password are just their usernames. (I set up those password only as a demo in this repo, they are not the same in the online website [progettoeco.altervista.org](progettoeco.altervista.org))
