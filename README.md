@@ -19,6 +19,12 @@ Every tip you give is more helpful than you think as I want to improve to get be
 
 ## User credentials
 
-The admin password is 12345678, while the other users' password are just their usernames (you can't access the users' accounts since I wrote this before publishing the code here in Github, minlength="8" maxlength="20" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,20}", but if you remove it in line 75 of the file header.php inside the includes folder, you'll be fine.
+The admin password is 12345678, while the other users' password are just their usernames.
+
+You can't access the users' accounts since I wrote this line before publishing the code here in Github:
+
+`minlength="8" maxlength="20" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,20}"` ,
+
+but if you remove it in [line 75 of the file header.php inside the includes folder](https://github.com/giova2217/ProgettoEco/blob/main/includes/header.php#L75), you'll be fine.
 
 I set up those password only as a demo in this repo, they are not the same in the online website [progettoeco.altervista.org](progettoeco.altervista.org), since that code is not exactly the same as the one here in this repo.
