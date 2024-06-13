@@ -1,6 +1,6 @@
 # Progetto Eco
 
-Progetto Eco is a blog website made in mainly PHP, using the MVC pattern, on eco sustainability that I created in high school.
+A school project about an eco sustainability blog. You can create articles about topics you care about and also add your own comments to other people's posts!
 
 ## Installation
 
