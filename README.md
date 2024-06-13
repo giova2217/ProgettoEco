@@ -23,7 +23,7 @@ The admin password is 12345678, while the other users' password are just their u
 
 You can't access the users' accounts since I wrote this line before publishing the code here in Github:
 
-`minlength="8" maxlength="20" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,20}"` ,
+`minlength="8" maxlength="20" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,20}"`
 
 but if you remove it in [line 75 of the file header.php inside the includes folder](https://github.com/giova2217/ProgettoEco/blob/main/includes/header.php#L75), you'll be fine.
 
