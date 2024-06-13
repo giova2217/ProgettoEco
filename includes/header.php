@@ -73,6 +73,7 @@ require_once "../controllers/csrf_token_controller.php"; // Controller that prev
           <label for="password" class="login__label">Password</label>
           <input type="password" name="password" placeholder="Inserisci la tua password" id="password" class="login__input" required 
           minlength="8" maxlength="20" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,20}">
+          <p class="password__hint" style="font-size: 1rem;">La password deve contenere almeno 8 caratteri, di cui almeno una lettera maiuscola, una minuscola e un numero.</p>
         </div>
       </div>
       
@@ -83,10 +84,6 @@ require_once "../controllers/csrf_token_controller.php"; // Controller that prev
         <p class="login__signup" style="font-size: 1rem;">
           Non hai ancora creato un account? <a href="registrati.php">Registrati</a>
         </p>
-        <!-- <a href="#" class="login__forgot">
-          Password dimenticata?
-        </a> -->
-        
       </div>
 
       <button type="submit" class="login__button">Accedi</button>
