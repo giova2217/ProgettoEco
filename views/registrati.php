@@ -32,7 +32,6 @@ require_once "../controllers/csrf_token_controller.php"; // Controller that prev
           <label for="username" class="login__label">Nome utente</label>
           <input type="text" placeholder="Inserisci il tuo username" id="username" name="username" class="login__input" required 
           minlength="3" maxlength="15" pattern="^[a-zA-Z0-9_-]+$" title="&Egrave; consentito solo l'uso di lettere, numeri, trattini bassi e trattini.">
-          <p id="usernameError" class="error-message"></p>
         </div>
           
         <div>
@@ -40,13 +39,11 @@ require_once "../controllers/csrf_token_controller.php"; // Controller that prev
           <input type="password" placeholder="Inserisci una password" id="password" name="password" class="login__input" required 
           minlength="8" maxlength="20" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,20}">
           <p class="password__hint">La password deve contenere almeno 8 caratteri, di cui almeno una lettera maiuscola, una minuscola e un numero.</p>
-          <p id="passwordError" class="error-message"></p>
         </div>
 
         <div>
           <label for="confirm_password" class="login__label">Conferma password</label>
           <input type="password" placeholder="Inserisci la stessa password" id="confirm_password" name="confirm_password" class="login__input" required>
-          <p id="confirmPasswordError" class="error-message"></p>
         </div>
       </div>
 
