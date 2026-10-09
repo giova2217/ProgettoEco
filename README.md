@@ -1,30 +1,151 @@
 # Progetto Eco
 
-A school project about an eco sustainability blog. You can create articles about topics you care about and also add your own comments to other people's posts!
+Progetto Eco is an eco-sustainability blog developed in PHP using the Model-View-Controller (MVC) architectural pattern.
+
+Originally created as a high school project, it combines content management, user interaction, and database integration in a web application focused on environmental sustainability.
+
+**[Live Demo](https://progettoeco.altervista.org)**
+
+## Features
+
+* **Article Management:** Create, view, edit, and delete articles.
+* **Category Management:** Organize articles into categories.
+* **User Management:** User accounts, profiles, and content ownership.
+* **Comment System:** Allow users to interact with articles through comments.
+* **Content Moderation:** Require approval before articles are published.
+* **Image Uploads:** Associate images with articles.
+* **Article Search:** Search for articles by title.
+* **Administrative Features:** Manage content and moderate article submissions.
+
+## Tech Stack
+
+| Technology      | Purpose                           |
+| --------------- | --------------------------------- |
+| PHP             | Server-side application logic     |
+| MySQL           | Relational database               |
+| MySQLi          | Database connectivity and queries |
+| HTML5           | Page structure                    |
+| CSS3            | Styling and layout                |
+| JavaScript      | Client-side interactions          |
+| XAMPP           | Local development environment     |
+| MVC             | Application architecture          |
+
+## Project Structure
+
+```text
+ProgettoEco/
+├── assets/         # Static assets
+├── controllers/    # Request handling and application logic
+├── includes/       # Shared components and configuration
+├── models/         # Data models and database operations
+├── views/          # User interface and application pages
+├── progettoeco.sql # Database schema and sample data
+├── LICENSE
+└── README.md
+```
 
 ## Installation
 
-Just install the .zip file of the entire folder. If it's your first time developing in PHP, then install XAMPP following [this guide](https://www.freecodecamp.org/news/how-to-get-started-with-php/#what-is-xampp).
+### Prerequisites
+
+* PHP
+* MySQL or MariaDB
+* Apache or another compatible web server
+* [XAMPP](https://www.apachefriends.org/) (recommended for local development)
+* [Git](https://git-scm.com/) (optional)
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/giova2217/ProgettoEco.git
+```
+
+### 2. Configure the local environment
+
+Move the project directory into your web server's document root.
+
+For XAMPP on Windows, use:
+
+```text
+C:\xampp\htdocs\ProgettoEco
+```
+
+Start Apache and MySQL from the XAMPP Control Panel.
+
+### 3. Set up the database
+
+1. Open [phpMyAdmin](http://localhost/phpmyadmin).
+2. Create a database named `progettoeco`.
+3. Import the `progettoeco.sql` file into the database.
+4. Check the database connection configuration in the project and update the credentials to match your local environment.
+
+### 4. Run the application
+
+Open the project through your local web server:
+
+```text
+http://localhost/ProgettoEco/
+```
+
+If the root URL does not load the application, open the appropriate entry point within the project, based on its current configuration.
+
+## Database Structure
+
+The application uses a relational database with the following main tables:
+
+| Table        | Description                                                              |
+| ------------ | ------------------------------------------------------------------------ |
+| `users`      | Stores user account information                                          |
+| `articles`   | Stores article content, authors, categories, images, and approval status |
+| `categories` | Stores article categories                                                |
+| `comments`   | Stores comments associated with users and articles                       |
+
+The database schema and sample data are provided in `progettoeco.sql`.
+
+## Architecture
+
+The application follows the **Model-View-Controller (MVC)** pattern to separate the main responsibilities of the application:
+
+* **Models:** Handle data access and database operations.
+* **Views:** Present content and provide the user interface.
+* **Controllers:** Process requests and coordinate application logic.
+* **Includes:** Provide shared components and configuration.
+
+This structure helped me understand how to organize a PHP application and separate presentation, data access, and request handling.
+
+## What I Learned
+
+Developing Progetto Eco gave me practical experience with:
+
+* Building a dynamic web application using PHP.
+* Designing and interacting with a relational database.
+* Implementing CRUD operations.
+* Organizing application code using the MVC pattern.
+* Managing user-generated content and article moderation.
+* Handling form submissions and image uploads.
+* Connecting frontend interfaces to backend logic.
 
 ## Contributing
 
-For major changes, please open an issue first
-to discuss what you would like to change. Or if you want, you can send me a message on [X](https://x.com/giova2217) about improvements to add or something else that you want to ask.
+Progetto Eco is a learning project, and constructive feedback is welcome.
 
-Every tip you give is more helpful than you think as I want to improve to get better at programming.
+For major changes, please open an issue first to discuss the proposed improvement.
+
+## Contact
+
+For questions about this project, feedback, or professional inquiries, feel free to contact me at:
+
+**[giovanni.trupia.dev@gmail.com](mailto:giovanni.trupia.dev@gmail.com)**
+
+* **GitHub:** [@giova2217](https://github.com/giova2217)
+* **X:** [@giova2217](https://x.com/giova2217)
 
 ## License
 
-[GNU GPLv3](https://choosealicense.com/licenses/gpl-3.0/)
+This project is distributed under the **GNU General Public License v3.0**. See the [`LICENSE`](LICENSE) file for details.
 
-## User credentials
+## Disclaimer
 
-The admin password is 12345678, while the other users' password are just their usernames.
+Progetto Eco was developed as a high school project within a limited timeframe. It represents a learning experience in web development rather than a production-ready application.
 
-You can't access the users' accounts since I wrote this line before publishing the code here in Github:
-
-`minlength="8" maxlength="20" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,20}"`
-
-but if you remove it in [line 75 of the file header.php inside the includes folder](https://github.com/giova2217/ProgettoEco/blob/main/includes/header.php#L75), you'll be fine.
-
-I set up those password only as a demo in this repo, they are not the same in the online website [progettoeco.altervista.org](progettoeco.altervista.org), since that code is not exactly the same as the one here in this repo.
+The codebase may require additional testing, security improvements, and maintenance before being used in a production environment.
