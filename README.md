@@ -137,9 +137,6 @@ For questions about this project, feedback, or professional inquiries, feel free
 
 **[giovanni.trupia.dev@gmail.com](mailto:giovanni.trupia.dev@gmail.com)**
 
-* **GitHub:** [@giova2217](https://github.com/giova2217)
-* **X:** [@giova2217](https://x.com/giova2217)
-
 ## License
 
 This project is distributed under the **GNU General Public License v3.0**. See the [`LICENSE`](LICENSE) file for details.
